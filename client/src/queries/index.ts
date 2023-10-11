@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const GetAllTransactions = gql`
   query GetAllTransactions {
@@ -11,7 +11,6 @@ export const GetAllTransactions = gql`
       data
       chainId
       hash
-      receipt
     }
   }
 `;
