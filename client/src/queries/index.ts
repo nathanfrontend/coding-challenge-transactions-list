@@ -31,7 +31,7 @@ export const GetSingleTransaction = gql`
 `;
 
 export const SaveTransaction = gql`
-  mutation SaveTransaction($transaction: TransactionInput!) {
+  mutation AddTransaction($transaction: TransactionInput!) {
     addTransaction(transaction: $transaction) {
       hash
     }

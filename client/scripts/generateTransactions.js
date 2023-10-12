@@ -1,7 +1,7 @@
-const { JsonRpcProvider, Wallet, parseEther } = require('ethers');
-const fetch = require('node-fetch');
+const { JsonRpcProvider, Wallet, parseEther } = require("ethers");
+const fetch = require("node-fetch");
 
-const provider = new JsonRpcProvider('http://localhost:8545');
+const provider = new JsonRpcProvider("http://localhost:8545");
 
 const randomEth = () => {
   const min = 0.5;
@@ -21,23 +21,26 @@ const saveTransactionToDatabase = async (transaction) => {
 
   const variables = {
     transaction: {
-      gasLimit: transaction.gasLimit && transaction.gasLimit.toString() || '0',
-      gasPrice: transaction.gasPrice && transaction.gasPrice.toString() || '0',
+      gasLimit:
+        (transaction.gasLimit && transaction.gasLimit.toString()) || "0",
+      gasPrice:
+        (transaction.gasPrice && transaction.gasPrice.toString()) || "0",
       to: transaction.to,
       from: transaction.from,
-      value: transaction.value && transaction.value.toString() || '',
+      value: (transaction.value && transaction.value.toString()) || "",
       data: transaction.data || null,
-      chainId: transaction.chainId && transaction.chainId.toString() || '123456',
+      chainId:
+        (transaction.chainId && transaction.chainId.toString()) || "123456",
       hash: transaction.hash,
-    }
+    },
   };
 
-  const response = await fetch('http://localhost:4000/graphql', {
-    method: 'POST',
+  const response = await fetch("http://localhost:4000/graphql", {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify({ query, variables })
+    body: JSON.stringify({ query, variables }),
   });
 
   const responseData = await response.json();
@@ -47,13 +50,15 @@ const saveTransactionToDatabase = async (transaction) => {
 };
 
 (async () => {
-  const walletFromMnemonic = Wallet.fromPhrase('myth like bonus scare over problem client lizard pioneer submit female collect');
+  const walletFromMnemonic = Wallet.fromPhrase(
+    "myth like bonus scare over problem client lizard pioneer submit female collect"
+  );
   const sender = new Wallet(walletFromMnemonic.privateKey, provider);
 
   for (let i = 1; i < 20; i++) {
     const transaction = {
       to: (await provider.listAccounts())[i].address,
-      value: randomEth()
+      value: randomEth(),
     };
 
     try {
