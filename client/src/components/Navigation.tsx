@@ -2,12 +2,13 @@ import React, { useCallback, useState } from "react";
 import Onboard, { WalletState } from "@web3-onboard/core";
 import injectedModule from "@web3-onboard/injected-wallets";
 import SendTransaction from "./SendTransaction";
+// for step two this injected module was missing in order to onboard new wallets
 const injected = injectedModule();
 const onboard = Onboard({
   wallets: [injected],
   chains: [
     {
-      id: "123456",
+      id: "0x1",
       token: "ETH",
       label: "Local Ganache",
       rpcUrl: "http://localhost:8545",
@@ -42,12 +43,13 @@ const Navigation: React.FC = () => {
             Transactions List
           </a>
         </div>
-        <div className="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow sm:block">
-          <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-end sm:mt-0 sm:pl-5">
+        {/* there was a hidden tag here which hides element on smaller pages */}
+        <div className="hs-collapse  overflow-hidden transition-all duration-300 basis-full grow sm:block">
+          <div className="flex flex-col gap-5 flex-wrap sm:flex-row sm:items-center sm:justify-end sm:mt-0 sm:pl-5">
             {wallet && (
               <>
-                <SendTransaction />
-                <p className="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border-2 border-gray-200 font-semibold text-gray-200 text-sm">
+                <SendTransaction wallet={wallet.accounts[0].address} />
+                <p className="py-3 px-4 inline-flex justify-center items-center  gap-2 rounded-md border-2 border-gray-200 font-semibold text-gray-200 text-sm">
                   {wallet.accounts[0].address}
                 </p>
               </>
